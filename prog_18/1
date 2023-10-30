@@ -1,0 +1,35 @@
+from person import Person
+from typing import List
+import utility
+
+class Appointment:
+    ...
+
+class Doctor(Person):
+    def __init__(self, name: str, contact_info: str, specialty: str):
+        super().__init__(name, contact_info)
+        self.specialty = specialty
+        self.appointments: List[Appointment] = []
+
+    @utility.type_checking(Appointment)
+    def manage_schedule(self, appointment: 'Appointment'):
+        self.appointments.append(appointment)
+
+    @property
+    def specialty(self):
+        return self._specialty
+
+    @specialty.setter
+    @utility.type_checking(str)
+    def specialty(self, value: str):
+        self._specialty = value
+
+    @property
+    def appointments(self):
+        return self._appointments
+
+    @appointments.setter
+    @utility.container_type_checking(list, Appointment)
+    def appointments(self, value: List[Appointment]):
+        self._appointments = value
+
